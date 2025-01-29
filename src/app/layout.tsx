@@ -17,7 +17,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
 	title: "The Croissant",
-	description: "Find the best croissants in your area",
+	description:
+		"The Croissant is a community-driven platform for sharing and discovering the best bakeries around the world.",
 };
 
 export default function RootLayout({
