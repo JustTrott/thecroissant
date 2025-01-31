@@ -43,3 +43,21 @@ export async function getBakeryById(id: string) {
 		where: { id },
 	});
 }
+
+export type SortField =
+	| "totalRating"
+	| "criticRating"
+	| "memberRating"
+	| "priceRating";
+export type SortOrder = "asc" | "desc";
+
+export async function getAllBakeries(
+	sortField: SortField = "totalRating",
+	sortOrder: SortOrder = "desc"
+) {
+	return await prisma.bakery.findMany({
+		orderBy: {
+			[sortField]: sortOrder,
+		},
+	});
+}

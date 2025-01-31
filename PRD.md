@@ -1,5 +1,7 @@
 # The Croissant - Bakery Review Platform
 
+The Croissant is a student-run club at NYU Paris. Our goal is to review as many bakeries in Paris as we can!
+
 ## Overview
 
 The Croissant is a web platform dedicated to reviewing and ranking bakeries based on their croissants. The platform provides a simple, user-friendly interface for discovering and comparing bakeries through their croissant offerings.

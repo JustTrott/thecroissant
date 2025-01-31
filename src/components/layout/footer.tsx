@@ -12,8 +12,7 @@ export function Footer() {
 							The Croissant
 						</h3>
 						<p className="text-gray-400">
-							Discovering and reviewing the best croissants in
-							town.
+							Discovering and reviewing the best bakeries in town.
 						</p>
 					</div>
 

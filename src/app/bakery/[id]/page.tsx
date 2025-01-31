@@ -2,6 +2,7 @@ import { ImageSlideshow } from "@/components/ui/image-slideshow";
 import { StarRating } from "@/components/ui/star-rating";
 import { getBakeryById } from "@/lib/actions/bakery";
 import { Clock, MapPin, Phone } from "lucide-react";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface BakeryPageProps {
@@ -90,20 +91,57 @@ export default async function BakeryPage({ params }: BakeryPageProps) {
 						</div>
 					</div>
 
-					{/* Review Date */}
-					<div className="mt-8 text-right text-gray-500">
-						Reviewed on{" "}
-						{new Date(bakery.createdAt).toLocaleDateString(
-							"en-US",
-							{
-								year: "numeric",
-								month: "long",
-								day: "numeric",
-							}
+					{/* Review Date and Edit Date */}
+					<div className="mt-8 text-right space-y-1">
+						<p className="text-gray-500">
+							Reviewed on{" "}
+							{new Date(bakery.createdAt).toLocaleDateString(
+								"en-US",
+								{
+									year: "numeric",
+									month: "long",
+									day: "numeric",
+								}
+							)}
+						</p>
+						{bakery.updatedAt > bakery.createdAt && (
+							<p className="text-gray-400 text-sm">
+								Last edited on{" "}
+								{new Date(bakery.updatedAt).toLocaleDateString(
+									"en-US",
+									{
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+									}
+								)}
+							</p>
 						)}
 					</div>
 				</div>
 			</article>
 		</main>
 	);
+}
+
+export async function generateMetadata({
+	params,
+}: {
+	params: { id: string };
+}): Promise<Metadata> {
+	const bakery = await getBakeryById(params.id);
+
+	if (!bakery) {
+		return {
+			title: "Bakery Not Found",
+		};
+	}
+
+	return {
+		title: bakery.name,
+		description: `${bakery.name} - ${bakery.review.substring(0, 150)}...`,
+		openGraph: {
+			images: bakery.photos,
+		},
+	};
 }

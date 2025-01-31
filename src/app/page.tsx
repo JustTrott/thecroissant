@@ -1,6 +1,7 @@
 import { RecentBakery } from "@/components/home/recent-bakery";
 import { TopBakeries } from "@/components/home/top-bakeries";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -28,3 +29,9 @@ export default async function HomePage() {
 		</main>
 	);
 }
+
+export const metadata: Metadata = {
+	title: "The Croissant",
+	description:
+		"Welcome to The Croissant - Your guide to the best croissants in Paris. Discover our latest reviews and top-rated bakeries.",
+};
