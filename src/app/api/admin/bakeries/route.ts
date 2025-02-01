@@ -29,7 +29,10 @@ export async function POST(request: Request) {
 		const data = await request.json();
 
 		// Calculate total rating
-		const totalRating = (data.criticRating + data.memberRating) / 2;
+		const totalRating =
+			data.criticRating * 0.4 +
+			data.memberRating * 0.4 +
+			data.priceRating * 0.2;
 
 		const bakery = await prisma.bakery.create({
 			data: {
