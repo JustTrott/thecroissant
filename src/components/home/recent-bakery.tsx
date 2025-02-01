@@ -25,13 +25,13 @@ export async function RecentBakery() {
 					{/* Left side - Review Quote */}
 					<div className="flex flex-col justify-center">
 						<div className="relative">
-							<Quote className="absolute -left-4 -top-4 h-8 w-8 text-amber-200" />
+							<Quote className="absolute -left-4 -top-4 h-8 w-8 text-blue-200" />
 							<blockquote className="pl-8 pr-4">
 								<p className="text-lg text-gray-700 italic leading-relaxed">
 									{bakery.review}
 								</p>
 								<footer className="mt-4 text-right">
-									<cite className="text-amber-600 font-semibold not-italic">
+									<cite className="text-blue-700 font-semibold not-italic">
 										― The Croissant
 									</cite>
 								</footer>
@@ -86,7 +86,7 @@ export async function RecentBakery() {
 
 							<Link
 								href={`/bakery/${bakery.id}`}
-								className="inline-block px-6 py-3 bg-amber-600 text-white rounded-full hover:bg-amber-700 transition-colors"
+								className="inline-block px-6 py-3 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition-colors"
 							>
 								Read Full Review
 							</Link>

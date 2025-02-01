@@ -1,3 +1,5 @@
+export const revalidate = 60; // revalidate every 60 seconds
+
 import { RecentBakery } from "@/components/home/recent-bakery";
 import { TopBakeries } from "@/components/home/top-bakeries";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
@@ -17,7 +19,7 @@ export default async function HomePage() {
 					<h2 className="text-2xl font-bold">Top Rated Bakeries</h2>
 					<Link
 						href="/leaderboard"
-						className="text-amber-600 hover:text-amber-700 font-medium"
+						className="text-blue-700 hover:text-blue-800 font-medium"
 					>
 						See full rankings →
 					</Link>

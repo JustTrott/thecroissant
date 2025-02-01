@@ -46,7 +46,7 @@ export async function FeaturedBakery() {
 
 				<Link
 					href={`/bakery/${bakery.id}`}
-					className="inline-block px-6 py-2 bg-amber-600 text-white rounded-full hover:bg-amber-700"
+					className="inline-block px-6 py-2 bg-blue-700 text-white rounded-full hover:bg-blue-800"
 				>
 					View Details
 				</Link>

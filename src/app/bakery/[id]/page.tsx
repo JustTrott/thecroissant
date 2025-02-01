@@ -1,3 +1,5 @@
+export const revalidate = 60; // revalidate every 60 seconds
+
 import { ImageSlideshow } from "@/components/ui/image-slideshow";
 import { StarRating } from "@/components/ui/star-rating";
 import { getBakeryById } from "@/lib/actions/bakery";
@@ -53,7 +55,7 @@ export default async function BakeryPage({ params }: BakeryPageProps) {
 					</header>
 
 					{/* Ratings Section */}
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-amber-50 rounded-lg mb-8">
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-blue-50 rounded-lg mb-8">
 						<div className="text-center">
 							<div className="text-lg font-semibold mb-2">
 								Critic Rating
@@ -70,21 +72,21 @@ export default async function BakeryPage({ params }: BakeryPageProps) {
 							<div className="text-lg font-semibold mb-2">
 								Price Level
 							</div>
-							<div className="text-xl font-bold text-amber-600">
+							<div className="text-xl font-bold text-blue-700">
 								{Array(bakery.priceRating).fill("$").join("")}
 							</div>
 						</div>
 					</div>
 
 					{/* Review Section */}
-					<div className="prose prose-amber max-w-none">
+					<div className="prose prose-blue max-w-none">
 						<h2 className="text-2xl font-bold mb-4">Our Review</h2>
 						<div className="bg-gray-50 p-6 rounded-lg">
 							<blockquote className="text-lg text-gray-700 italic">
 								{bakery.review}
 							</blockquote>
 							<div className="mt-4 text-right">
-								<cite className="text-amber-600 font-semibold not-italic">
+								<cite className="text-blue-700 font-semibold not-italic">
 									― The Croissant
 								</cite>
 							</div>

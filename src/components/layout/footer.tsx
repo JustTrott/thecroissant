@@ -8,7 +8,7 @@ export function Footer() {
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 					{/* Brand Section */}
 					<div className="space-y-4">
-						<h3 className="text-xl font-bold text-amber-500">
+						<h3 className="text-xl font-bold text-blue-700">
 							The Croissant
 						</h3>
 						<p className="text-gray-400">
@@ -23,7 +23,7 @@ export function Footer() {
 							<li>
 								<Link
 									href="/"
-									className="text-gray-400 hover:text-amber-500 transition-colors"
+									className="text-gray-400 hover:text-blue-500 transition-colors"
 								>
 									Home
 								</Link>
@@ -31,7 +31,7 @@ export function Footer() {
 							<li>
 								<Link
 									href="/leaderboard"
-									className="text-gray-400 hover:text-amber-500 transition-colors"
+									className="text-gray-400 hover:text-blue-500 transition-colors"
 								>
 									Leaderboard
 								</Link>
@@ -47,14 +47,14 @@ export function Footer() {
 								href="https://github.com/JustTrott/thecroissant"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="flex items-center gap-2 text-gray-400 hover:text-amber-500 transition-colors"
+								className="flex items-center gap-2 text-gray-400 hover:text-blue-500 transition-colors"
 							>
 								<Github className="h-5 w-5" />
 								<span>GitHub</span>
 							</a>
 							<a
-								href="mailto:contact@thecroissant.com"
-								className="flex items-center gap-2 text-gray-400 hover:text-amber-500 transition-colors"
+								href="mailto:nmd9736@nyu.edu"
+								className="flex items-center gap-2 text-gray-400 hover:text-blue-500 transition-colors"
 							>
 								<Mail className="h-5 w-5" />
 								<span>Contact Us</span>

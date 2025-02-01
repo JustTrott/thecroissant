@@ -1,3 +1,5 @@
+export const revalidate = 60; // revalidate every 60 seconds
+
 import { StarRating } from "@/components/ui/star-rating";
 import { getAllBakeries, type SortField } from "@/lib/actions/bakery";
 import { ArrowDownIcon, ArrowUpIcon, MapPin } from "lucide-react";
@@ -26,8 +28,8 @@ function SortableColumnHeader({
 			href={`/leaderboard?sort=${field}&order=${
 				isActive ? nextOrder : "desc"
 			}`}
-			className={`flex items-center gap-1 hover:text-amber-600 transition-colors ${
-				isActive ? "text-amber-600" : ""
+			className={`flex items-center gap-1 hover:text-blue-700 transition-colors ${
+				isActive ? "text-blue-700" : ""
 			}`}
 		>
 			{title}
@@ -61,7 +63,7 @@ export default async function LeaderboardPage({
 				<div className="bg-white rounded-lg shadow-lg overflow-hidden">
 					<div className="overflow-x-auto">
 						<table className="w-full">
-							<thead className="bg-amber-50">
+							<thead className="bg-blue-50">
 								<tr>
 									<th className="px-6 py-4 text-left">
 										Rank
@@ -113,7 +115,7 @@ export default async function LeaderboardPage({
 										className="hover:bg-gray-50 transition-colors"
 									>
 										<td className="px-6 py-4">
-											<span className="font-bold text-2xl text-amber-600">
+											<span className="font-bold text-2xl text-blue-700">
 												#{index + 1}
 											</span>
 										</td>
@@ -141,7 +143,7 @@ export default async function LeaderboardPage({
 													)}
 												</div>
 												<div>
-													<h2 className="font-semibold text-lg group-hover:text-amber-600 transition-colors">
+													<h2 className="font-semibold text-lg group-hover:text-blue-700 transition-colors">
 														{bakery.name}
 													</h2>
 													<p className="text-sm text-gray-500">
@@ -178,7 +180,7 @@ export default async function LeaderboardPage({
 											</span>
 										</td>
 										<td className="px-6 py-4">
-											<span className="text-lg font-medium text-amber-600">
+											<span className="text-lg font-medium text-blue-700">
 												{Array(bakery.priceRating)
 													.fill("$")
 													.join("")}

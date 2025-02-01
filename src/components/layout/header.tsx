@@ -8,7 +8,7 @@ export function Header() {
 			<div className="container mx-auto px-4 h-16 flex items-center">
 				<Link
 					href="/"
-					className="text-2xl font-bold text-amber-600 hover:text-amber-700"
+					className="text-2xl font-bold text-blue-700 hover:text-blue-800"
 				>
 					The Croissant
 				</Link>
