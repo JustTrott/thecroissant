@@ -27,6 +27,7 @@ model Bakery {
   photos        String[] // Array of photo URLs
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  deletedAt     DateTime? // Null means not deleted
 }
 
 model Admin {
@@ -35,4 +36,5 @@ model Admin {
   passwordHash String   // Never store plain text passwords
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  deletedAt    DateTime? // Null means not deleted
 }

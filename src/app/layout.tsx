@@ -16,7 +16,10 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-	title: "The Croissant",
+	title: {
+		default: "The Croissant",
+		template: "%s | The Croissant",
+	},
 	description:
 		"The Croissant is a community-driven platform for sharing and discovering the best bakeries around the world.",
 };

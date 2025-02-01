@@ -9,6 +9,7 @@ export async function getRecentBakery() {
 			NOT: {
 				totalRating: 0,
 			},
+			deletedAt: null,
 		},
 	});
 
@@ -17,6 +18,9 @@ export async function getRecentBakery() {
 
 export async function getTopBakeries() {
 	return await prisma.bakery.findMany({
+		where: {
+			deletedAt: null,
+		},
 		orderBy: {
 			totalRating: "desc",
 		},
@@ -27,6 +31,7 @@ export async function getTopBakeries() {
 export async function searchBakeries(query: string) {
 	return await prisma.bakery.findMany({
 		where: {
+			deletedAt: null,
 			OR: [
 				{ name: { contains: query, mode: "insensitive" } },
 				{ address: { contains: query, mode: "insensitive" } },
@@ -39,8 +44,11 @@ export async function searchBakeries(query: string) {
 }
 
 export async function getBakeryById(id: string) {
-	return await prisma.bakery.findUnique({
-		where: { id },
+	return await prisma.bakery.findFirst({
+		where: {
+			id,
+			deletedAt: null,
+		},
 	});
 }
 
@@ -56,6 +64,9 @@ export async function getAllBakeries(
 	sortOrder: SortOrder = "desc"
 ) {
 	return await prisma.bakery.findMany({
+		where: {
+			deletedAt: null,
+		},
 		orderBy: {
 			[sortField]: sortOrder,
 		},
