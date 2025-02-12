@@ -18,10 +18,15 @@ export function ReviewFormModal({
 	initialData,
 }: ReviewFormModalProps) {
 	const [isLoading, setIsLoading] = useState(false);
-	const [uploadedImages, setUploadedImages] = useState<string[]>(
-		initialData?.photos || []
-	);
+	const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 	const [authors, setAuthors] = useState<Author[]>([]);
+
+	useEffect(() => {
+		// Initialize uploaded images when modal opens with initial data
+		if (isOpen && initialData?.photos) {
+			setUploadedImages(initialData.photos);
+		}
+	}, [isOpen, initialData]);
 
 	useEffect(() => {
 		// Fetch authors when modal opens
@@ -33,6 +38,13 @@ export function ReviewFormModal({
 		}
 	}, [isOpen]);
 
+	// Reset state when modal closes
+	useEffect(() => {
+		if (!isOpen) {
+			setUploadedImages([]);
+		}
+	}, [isOpen]);
+
 	if (!isOpen) return null;
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,6 +52,7 @@ export function ReviewFormModal({
 		setIsLoading(true);
 
 		const formData = new FormData(e.currentTarget);
+		const authorId = formData.get("authorId") as string;
 		const data = {
 			name: formData.get("name") as string,
 			address: formData.get("address") as string,
@@ -50,7 +63,8 @@ export function ReviewFormModal({
 			priceRating: parseInt(formData.get("priceRating") as string),
 			review: formData.get("review") as string,
 			photos: uploadedImages,
-			authorId: formData.get("authorId") as string,
+			// Always send authorId, but set it to null if anonymous
+			authorId: authorId === "anonymous" ? null : authorId,
 		};
 
 		try {
@@ -106,11 +120,11 @@ export function ReviewFormModal({
 								<select
 									name="authorId"
 									required
-									defaultValue={initialData?.authorId || ""}
+									defaultValue={initialData?.authorId || "anonymous"}
 									className="w-full px-3 py-2 border rounded-md"
 									disabled={isLoading}
 								>
-									<option value="">Select an author</option>
+									<option value="anonymous">Anonymous Reviewer</option>
 									{authors.map((author) => (
 										<option key={author.id} value={author.id}>
 											{author.firstName} {author.lastName}
