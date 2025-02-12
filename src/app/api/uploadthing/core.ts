@@ -17,6 +17,21 @@ export const ourFileRouter = {
 			console.log("Upload complete for file:", file.url);
 			return { url: file.url };
 		}),
+
+	authorImages: f({
+		image: {
+			maxFileSize: "4MB",
+			maxFileCount: 1,
+		},
+	})
+		.middleware(() => {
+			// No auth required for now, but we could add it here later
+			return {};
+		})
+		.onUploadComplete(async ({ file }) => {
+			console.log("Upload complete for file:", file.url);
+			return { url: file.url };
+		}),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

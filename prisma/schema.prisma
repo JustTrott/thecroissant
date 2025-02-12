@@ -28,6 +28,19 @@ model Bakery {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   deletedAt     DateTime? // Null means not deleted
+  authorId      String?   // Optional to maintain backward compatibility
+  author        Author?   @relation(fields: [authorId], references: [id])
+}
+
+model Author {
+  id        String    @id @default(cuid())
+  firstName String
+  lastName  String
+  image     String?   // URL to author's image
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime? // Null means not deleted
+  bakeries  Bakery[]
 }
 
 model Admin {

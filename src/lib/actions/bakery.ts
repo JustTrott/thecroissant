@@ -11,6 +11,9 @@ export async function getRecentBakery() {
 			},
 			deletedAt: null,
 		},
+		include: {
+			author: true,
+		},
 	});
 
 	return bakery;
@@ -25,6 +28,9 @@ export async function getTopBakeries() {
 			totalRating: "desc",
 		},
 		take: 3,
+		include: {
+			author: true,
+		},
 	});
 }
 
@@ -44,10 +50,10 @@ export async function searchBakeries(query: string) {
 }
 
 export async function getBakeryById(id: string) {
-	return await prisma.bakery.findFirst({
-		where: {
-			id,
-			deletedAt: null,
+	return await prisma.bakery.findUnique({
+		where: { id },
+		include: {
+			author: true,
 		},
 	});
 }

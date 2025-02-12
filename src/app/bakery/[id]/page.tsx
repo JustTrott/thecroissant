@@ -3,8 +3,9 @@ export const revalidate = 60; // revalidate every 60 seconds
 import { ImageSlideshow } from "@/components/ui/image-slideshow";
 import { StarRating } from "@/components/ui/star-rating";
 import { getBakeryById } from "@/lib/actions/bakery";
-import { Clock, MapPin, Phone } from "lucide-react";
+import { Clock, MapPin, Phone, User } from "lucide-react";
 import { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 interface BakeryPageProps {
@@ -31,9 +32,7 @@ export default async function BakeryPage({ params }: BakeryPageProps) {
 				{/* Bakery Info */}
 				<div className="bg-white rounded-lg shadow-lg p-8">
 					<header className="mb-6">
-						<h1 className="text-4xl font-bold mb-4">
-							{bakery.name}
-						</h1>
+						<h1 className="text-4xl font-bold mb-4">{bakery.name}</h1>
 						<div className="flex flex-wrap items-center gap-6 text-gray-600">
 							<div className="flex items-center gap-2">
 								<MapPin className="h-5 w-5" />
@@ -57,21 +56,15 @@ export default async function BakeryPage({ params }: BakeryPageProps) {
 					{/* Ratings Section */}
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-blue-50 rounded-lg mb-8">
 						<div className="text-center">
-							<div className="text-lg font-semibold mb-2">
-								Critic Rating
-							</div>
+							<div className="text-lg font-semibold mb-2">Critic Rating</div>
 							<StarRating rating={bakery.criticRating} />
 						</div>
 						<div className="text-center">
-							<div className="text-lg font-semibold mb-2">
-								Member Rating
-							</div>
+							<div className="text-lg font-semibold mb-2">Member Rating</div>
 							<StarRating rating={bakery.memberRating} />
 						</div>
 						<div className="text-center">
-							<div className="text-lg font-semibold mb-2">
-								Price Level
-							</div>
+							<div className="text-lg font-semibold mb-2">Price Level</div>
 							<div className="text-xl font-bold text-blue-700">
 								{Array(bakery.priceRating).fill("$").join("")}
 							</div>
@@ -85,10 +78,32 @@ export default async function BakeryPage({ params }: BakeryPageProps) {
 							<blockquote className="text-lg text-gray-700 italic">
 								{bakery.review}
 							</blockquote>
-							<div className="mt-4 text-right">
-								<cite className="text-blue-700 font-semibold not-italic">
-									― The Croissant
-								</cite>
+							<div className="mt-4 flex items-center justify-end gap-4">
+								{bakery.author && (
+									<div className="flex items-center gap-3">
+										{bakery.author.image && (
+											<div className="relative w-10 h-10 rounded-full overflow-hidden">
+												<Image
+													src={bakery.author.image}
+													alt={`${bakery.author.firstName} ${bakery.author.lastName}`}
+													fill
+													className="object-cover"
+												/>
+											</div>
+										)}
+										<cite className="text-blue-700 font-semibold not-italic">
+											{bakery.author.firstName} {bakery.author.lastName}
+										</cite>
+									</div>
+								)}
+								{!bakery.author && (
+									<div className="flex items-center gap-2">
+										<User className="h-5 w-5 text-gray-400" />
+										<cite className="text-gray-500 font-semibold not-italic">
+											Anonymous Reviewer
+										</cite>
+									</div>
+								)}
 							</div>
 						</div>
 					</div>
@@ -97,26 +112,20 @@ export default async function BakeryPage({ params }: BakeryPageProps) {
 					<div className="mt-8 text-right space-y-1">
 						<p className="text-gray-500">
 							Reviewed on{" "}
-							{new Date(bakery.createdAt).toLocaleDateString(
-								"en-US",
-								{
-									year: "numeric",
-									month: "long",
-									day: "numeric",
-								}
-							)}
+							{new Date(bakery.createdAt).toLocaleDateString("en-US", {
+								year: "numeric",
+								month: "long",
+								day: "numeric",
+							})}
 						</p>
 						{bakery.updatedAt > bakery.createdAt && (
 							<p className="text-gray-400 text-sm">
 								Last edited on{" "}
-								{new Date(bakery.updatedAt).toLocaleDateString(
-									"en-US",
-									{
-										year: "numeric",
-										month: "long",
-										day: "numeric",
-									}
-								)}
+								{new Date(bakery.updatedAt).toLocaleDateString("en-US", {
+									year: "numeric",
+									month: "long",
+									day: "numeric",
+								})}
 							</p>
 						)}
 					</div>

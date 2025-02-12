@@ -2,6 +2,7 @@ export const revalidate = 60; // revalidate every 60 seconds
 
 import { StarRating } from "@/components/ui/star-rating";
 import { getAllBakeries, type SortField } from "@/lib/actions/bakery";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import { ArrowDownIcon, ArrowUpIcon, MapPin } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -25,9 +26,7 @@ function SortableColumnHeader({
 
 	return (
 		<Link
-			href={`/leaderboard?sort=${field}&order=${
-				isActive ? nextOrder : "desc"
-			}`}
+			href={`/leaderboard?sort=${field}&order=${isActive ? nextOrder : "desc"}`}
 			className={`flex items-center gap-1 hover:text-blue-700 transition-colors ${
 				isActive ? "text-blue-700" : ""
 			}`}
@@ -65,12 +64,8 @@ export default async function LeaderboardPage({
 						<table className="w-full">
 							<thead className="bg-blue-50">
 								<tr>
-									<th className="px-6 py-4 text-left">
-										Rank
-									</th>
-									<th className="px-6 py-4 text-left">
-										Bakery
-									</th>
+									<th className="px-6 py-4 text-left">Rank</th>
+									<th className="px-6 py-4 text-left">Bakery</th>
 									<th className="px-6 py-4 text-left">
 										<SortableColumnHeader
 											title="Overall"
@@ -103,9 +98,7 @@ export default async function LeaderboardPage({
 											sortOrder={sortOrder}
 										/>
 									</th>
-									<th className="px-6 py-4 text-left">
-										Location
-									</th>
+									<th className="px-6 py-4 text-left">Location</th>
 								</tr>
 							</thead>
 							<tbody className="divide-y divide-gray-200">
@@ -125,22 +118,12 @@ export default async function LeaderboardPage({
 												className="flex items-center gap-4 group"
 											>
 												<div className="relative w-16 h-16 rounded-lg overflow-hidden">
-													{bakery.photos[0] ? (
-														<Image
-															src={
-																bakery.photos[0]
-															}
-															alt={bakery.name}
-															fill
-															className="object-cover"
-														/>
-													) : (
-														<div className="w-full h-full bg-gray-100 flex items-center justify-center">
-															<span className="text-gray-400">
-																No image
-															</span>
-														</div>
-													)}
+													<Image
+														src={bakery.photos[0] || PLACEHOLDER_IMAGE}
+														alt={bakery.name}
+														fill
+														className="object-cover"
+													/>
 												</div>
 												<div>
 													<h2 className="font-semibold text-lg group-hover:text-blue-700 transition-colors">
@@ -148,9 +131,7 @@ export default async function LeaderboardPage({
 													</h2>
 													<p className="text-sm text-gray-500">
 														Reviewed{" "}
-														{new Date(
-															bakery.createdAt
-														).toLocaleDateString(
+														{new Date(bakery.createdAt).toLocaleDateString(
 															"en-US",
 															{
 																month: "short",
@@ -163,9 +144,7 @@ export default async function LeaderboardPage({
 											</Link>
 										</td>
 										<td className="px-6 py-4">
-											<StarRating
-												rating={bakery.totalRating}
-											/>
+											<StarRating rating={bakery.totalRating} />
 										</td>
 										<td className="px-6 py-4">
 											<span className="font-medium">
@@ -181,9 +160,7 @@ export default async function LeaderboardPage({
 										</td>
 										<td className="px-6 py-4">
 											<span className="text-lg font-medium text-blue-700">
-												{Array(bakery.priceRating)
-													.fill("$")
-													.join("")}
+												{Array(bakery.priceRating).fill("$").join("")}
 											</span>
 										</td>
 										<td className="px-6 py-4">

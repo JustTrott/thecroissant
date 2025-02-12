@@ -1,10 +1,10 @@
 "use client";
 
 import { OurFileRouter } from "@/app/api/uploadthing/core";
-import { Bakery } from "@prisma/client";
+import { Author, Bakery } from "@prisma/client";
 import { UploadButton } from "@uploadthing/react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ReviewFormModalProps {
 	isOpen: boolean;
@@ -21,6 +21,17 @@ export function ReviewFormModal({
 	const [uploadedImages, setUploadedImages] = useState<string[]>(
 		initialData?.photos || []
 	);
+	const [authors, setAuthors] = useState<Author[]>([]);
+
+	useEffect(() => {
+		// Fetch authors when modal opens
+		if (isOpen) {
+			fetch("/api/admin/authors")
+				.then((res) => res.json())
+				.then((data) => setAuthors(data))
+				.catch((error) => console.error("Error fetching authors:", error));
+		}
+	}, [isOpen]);
 
 	if (!isOpen) return null;
 
@@ -39,6 +50,7 @@ export function ReviewFormModal({
 			priceRating: parseInt(formData.get("priceRating") as string),
 			review: formData.get("review") as string,
 			photos: uploadedImages,
+			authorId: formData.get("authorId") as string,
 		};
 
 		try {
@@ -89,6 +101,26 @@ export function ReviewFormModal({
 						<div className="space-y-4">
 							<div>
 								<label className="block text-sm font-medium text-gray-700 mb-1">
+									Author
+								</label>
+								<select
+									name="authorId"
+									required
+									defaultValue={initialData?.authorId || ""}
+									className="w-full px-3 py-2 border rounded-md"
+									disabled={isLoading}
+								>
+									<option value="">Select an author</option>
+									{authors.map((author) => (
+										<option key={author.id} value={author.id}>
+											{author.firstName} {author.lastName}
+										</option>
+									))}
+								</select>
+							</div>
+
+							<div>
+								<label className="block text-sm font-medium text-gray-700 mb-1">
 									Bakery Name
 								</label>
 								<input
@@ -136,9 +168,7 @@ export function ReviewFormModal({
 									<input
 										type="text"
 										name="contact"
-										defaultValue={
-											initialData?.contact || ""
-										}
+										defaultValue={initialData?.contact || ""}
 										className="w-full px-3 py-2 border rounded-md"
 										disabled={isLoading}
 									/>
@@ -157,9 +187,7 @@ export function ReviewFormModal({
 										max="5"
 										step="0.1"
 										required
-										defaultValue={
-											initialData?.criticRating || 0
-										}
+										defaultValue={initialData?.criticRating || 0}
 										className="w-full px-3 py-2 border rounded-md"
 										disabled={isLoading}
 									/>
@@ -176,9 +204,7 @@ export function ReviewFormModal({
 										max="5"
 										step="0.1"
 										required
-										defaultValue={
-											initialData?.memberRating || 0
-										}
+										defaultValue={initialData?.memberRating || 0}
 										className="w-full px-3 py-2 border rounded-md"
 										disabled={isLoading}
 									/>
@@ -191,9 +217,7 @@ export function ReviewFormModal({
 									<select
 										name="priceRating"
 										required
-										defaultValue={
-											initialData?.priceRating || 1
-										}
+										defaultValue={initialData?.priceRating || 1}
 										className="w-full px-3 py-2 border rounded-md"
 										disabled={isLoading}
 									>
@@ -225,63 +249,39 @@ export function ReviewFormModal({
 								<div className="space-y-4">
 									{uploadedImages.length > 0 && (
 										<div className="grid grid-cols-2 gap-4">
-											{uploadedImages.map(
-												(url, index) => (
-													<div
-														key={url}
-														className="relative group"
-													>
-														<div className="relative h-40 rounded-lg overflow-hidden">
-															<Image
-																src={url}
-																alt={`Bakery photo ${
-																	index + 1
-																}`}
-																fill
-																className="object-cover"
-															/>
-														</div>
-														<button
-															type="button"
-															onClick={() =>
-																removeImage(
-																	index
-																)
-															}
-															className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-														>
-															✕
-														</button>
+											{uploadedImages.map((url, index) => (
+												<div key={url} className="relative group">
+													<div className="relative h-40 rounded-lg overflow-hidden">
+														<Image
+															src={url}
+															alt={`Bakery photo ${index + 1}`}
+															fill
+															className="object-cover"
+														/>
 													</div>
-												)
-											)}
+													<button
+														type="button"
+														onClick={() => removeImage(index)}
+														className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+													>
+														✕
+													</button>
+												</div>
+											))}
 										</div>
 									)}
 
 									{uploadedImages.length < 5 && (
-										<UploadButton<
-											OurFileRouter,
-											"bakeryImages"
-										>
+										<UploadButton<OurFileRouter, "bakeryImages">
 											endpoint="bakeryImages"
 											onClientUploadComplete={(res) => {
 												if (res) {
-													const newUrls = res.map(
-														(file) => file.url
-													);
-													setUploadedImages(
-														(prev) => [
-															...prev,
-															...newUrls,
-														]
-													);
+													const newUrls = res.map((file) => file.url);
+													setUploadedImages((prev) => [...prev, ...newUrls]);
 												}
 											}}
 											onUploadError={(error: Error) => {
-												console.error(
-													"Upload error:",
-													error
-												);
+												console.error("Upload error:", error);
 											}}
 										/>
 									)}
