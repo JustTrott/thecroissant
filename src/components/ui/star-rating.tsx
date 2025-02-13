@@ -9,7 +9,7 @@ export function StarRating({ rating }: StarRatingProps) {
 	const MAX_STARS = 5;
 
 	return (
-		<div className="flex items-center">
+		<div className="flex items-center justify-center">
 			<div className="flex">
 				{[...Array(MAX_STARS)].map((_, index) => {
 					const fillPercentage = Math.max(
