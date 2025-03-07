@@ -29,7 +29,7 @@ export async function RecentBakery() {
 					<div className="flex flex-col justify-center">
 						<div className="relative">
 							<Quote className="absolute -left-4 -top-4 h-8 w-8 text-blue-200" />
-							<blockquote className="pl-8 pr-4">
+							<blockquote className="pl-8 pr-4 whitespace-pre-wrap break-words">
 								<p className="text-lg text-gray-700 italic leading-relaxed">
 									{truncatedReview}
 								</p>
