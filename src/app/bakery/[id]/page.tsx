@@ -75,7 +75,7 @@ export default async function BakeryPage({ params }: BakeryPageProps) {
 					<div className="prose prose-blue max-w-none">
 						<h2 className="text-2xl font-bold mb-4">Our Review</h2>
 						<div className="bg-gray-50 p-6 rounded-lg">
-							<blockquote className="text-lg text-gray-700 italic">
+							<blockquote className="text-lg text-gray-700 italic whitespace-pre-wrap break-words">
 								{bakery.review}
 							</blockquote>
 							<div className="mt-4 flex items-center justify-end gap-4">
